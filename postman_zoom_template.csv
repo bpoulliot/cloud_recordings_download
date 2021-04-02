@@ -1,0 +1,2 @@
+﻿host,session_title,start_time,duration,alternative_hosts,timezone_code
+host_email@fake.com,Test API Session 01,2021-05-02T12:30:00,60,not_real@fake.com,America/Denver

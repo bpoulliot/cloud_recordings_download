@@ -1,0 +1,28 @@
+{
+    "topic": "{{session_title}}",
+    "type": 2,
+    "start_time": "{{start_time}}",
+    "duration": "{{duration}}",
+    "password": "",
+    "timezone": "{{timezone_code}}",
+    "agenda": "",
+    "settings": {
+        "host_video": false,
+        "participant_video": false,
+        "cn_meeting": false,
+        "in_meeting": false,
+        "join_before_host": false,
+        "mute_upon_entry": true,
+        "watermark": false,
+        "use_pmi": false,
+        "approval_type": 2,
+        "audio": "both",
+        "auto_recording": "none",
+        "close_registration": false,
+        "waiting_room": true,
+        "meeting_authentication": false,
+        "show_share_button": false,
+        "allow_multiple_devices": false,
+        "alternative_hosts": "{{alternative_hosts}}"
+    }
+}
