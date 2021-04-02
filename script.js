@@ -26,7 +26,8 @@ app.post('/write', (req, res) => {
     filename = `${req.body.requestName}${uniqueIdentifier || ''}`,
     filePath = `${path.join(folderPath, filename)}.${extension}`,
     options = req.body.options || undefined;
-
+  
+  // CHANGE: Added comma and newline to write operation
   fs[fsMode](filePath, req.body.responseData + ',' + '\n', options, (err) => {
     if (err) {
       console.log(err);
