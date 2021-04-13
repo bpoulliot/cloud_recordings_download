@@ -9,7 +9,9 @@ A very small Python script to convert a JSON file created using a modified versi
 # Purpose
 I could not figure out how to get ResponseToFile-Postman to actually write a CSV so I wrote this script.
 
-# Walkthrough
+# Scripts
+
+## postman_jsontocsv.py
 1. The script takes two arguments, the input JSON file and the output CSV file (include your file extension).
 2. Reads in the JSON file written by the modified ResponseToFile-Postman script.
 3. Adds brackets, removes newline and comma at end of file and writes a new temp file.
@@ -18,6 +20,44 @@ I could not figure out how to get ResponseToFile-Postman to actually write a CSV
 4. Writes new CSV with proper newlines and columns
 
 Usage: ./postman_jsontocsv.py [input-file] [outputfile]
+
+## cloud_rec_json-to-csv.py
+1. Two arguments, input JSON from Postman that returns cloud recordings and destination file.
+2. SEE postman_jsontoCSV.py walkthrough
+
+Usage: ./cloud_rec_json-to-csv.py [input-file] [outputfile]
+
+## zoom_oauth.py
+NOTE: Depends on rauth Python library (may be unmaintained -- will search for better alternative)
+
+A Python script, defines a function that either fetches a token or refreshes an existing token. Not terribly secure, use at your own risk.
+
+1. Checks for existing refresh token in JSON credentials file
+2. If present: 
+    a. Sends a request to Zoom API to renew token authorization
+    b. Writes refresh token to JSON creds file from API response
+    c. Returns Zoom OAuth2 token
+4. If not present:
+    a. Sends request for authorization to Zoom
+    b. Opens web browser to Zoom + redirect URL
+    c. Requests user input of redirect URL (includes authorization code for token request)
+    d. Sends a request for an OAuth2 token using authorization code from #4c
+    e. Writes refresh token to JSON creds file from API response
+    f. Returns Zoom OAuth2 token
+    
+Usage: N/A (used in download_account_recordings) -- can be used on its own if needed
+
+## download_account_recordings.py
+NOTE: Dependency on zoom_oauth.py. Requires some configuration such as output dir, dates, CSV log file name, Zoom account ID (if not using "me")...
+
+1. Uses zoom_oauth.py to get an Oauth2 token or refresh an existing token.
+2. Grabs a list of cloud recordings from an account -- CURRENTLY ACCOUNT LEVEL ONLY, MAX 300 RECORDINGS
+3. Documents the JSON response for each recording in a CSV
+4. Downloads 3 files (if present, must be "completed" status): MP4 recording, TXT chat file, VTT audio transcript
+5. Renames files (using "topic" from API response) to alphanumeric, replaces illegal characters with hyphens (regular expression can be customized)
+6. Creates folders for each recording (using "topic" from API response) w/ same replacement scheme as #5
+
+Usage: ./download_account_recordings.py
 
 # Postman Collection for Zoom
 Here's the collection I used:
