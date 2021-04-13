@@ -1,10 +1,14 @@
-# postman_jsontocsv
-A very small Python script to convert a JSON file created using a modified version of sivcan/ResponseToFile-Postman (https://github.com/sivcan/ResponseToFile-Postman) to a CSV.
+# Zoom Conference Tools
+These are several related, but iterative approaches to scheduling, documenting, and downloading Zoom meetings for large-scale events. They were written on-the-fly and as such currently have no error handling and conform only to the problems I faced during my most recent conference technology experience. Thus, they are shared out without warranty or support (though I'd like to make them better over time). The JSON to CSV tools use Postman as a primary driver and also require the ResponseToFile-Postman script(s). New versions of Postman allow you to save the JSON responses from Runner call sets, so the extra software/setup may be unnecesary.
+
+The first two scripts assume that you're using ResponseToFile-Postman. The others do not require that software, but have their own dependencies.
 
 # Prerequisites
 1. Create an OAuth app on the Zoom Marketplace to serve your purposes. Scopes should include creating webinars and meetings. I opted to allow for viewing of these as well.
-2. Figure out your OAuth workflow -- using the built-in token retriever in Postman was very useful. If you opt for this route, set the token config to authenticate via browser and ensure the Zoom app's callback URL matches what's in Postman, otherwise the authentication will fail. 
-3. Install the ResponseToFile-Postman program. Learn how to run the local server and test it with a few calls, particularly using the appendFile mode and multiple calls at once (i.e, Runner). Examine the JSON files and see that the original program merely pastes the output to the file rather than writing readable JSON.
+2. Figure out your OAuth workflow -- using the built-in token retriever in Postman was very useful. If you opt for this route, set the token config to authenticate via browser and ensure the Zoom app's callback URL matches what's in Postman, otherwise the authentication will fail. NOW PROVIDED: A Python Zoom OAuth2 workflow -- see zoom_oauth.py.
+3. Install the ResponseToFile-Postman program. Learn how to run the local server and test it with a few calls, particularly using the appendFile mode and multiple calls at once (i.e, Runner). Examine the JSON files and see that the original program merely pastes the output to the file rather than writing readable JSON.***
+
+*** Again, this may not be necessary for all functions.
 
 # Purpose
 I could not figure out how to get ResponseToFile-Postman to actually write a CSV so I wrote this script.
@@ -48,7 +52,7 @@ A Python script, defines a function that either fetches a token or refreshes an 
 Usage: N/A (used in download_account_recordings) -- can be used on its own if needed
 
 ## download_account_recordings.py
-NOTE: Dependency on zoom_oauth.py. Requires some configuration such as output dir, dates, CSV log file name, Zoom account ID (if not using "me")...
+NOTE: Dependency on zoom_oauth.py and Python requests library. Requires some configuration such as output dir, dates, CSV log file name, Zoom account ID (if not using "me")...
 
 1. Uses zoom_oauth.py to get an Oauth2 token or refresh an existing token.
 2. Grabs a list of cloud recordings from an account -- CURRENTLY ACCOUNT LEVEL ONLY, MAX 300 RECORDINGS
